@@ -66,15 +66,17 @@ function listar() {
 }
 
 function editar() {
+    
     let resposta = prompt('Deseja editar seu voto? (sim/nao) ');
 
     if (resposta === 'sim') {
         let nomeEleitor = prompt('Digite seu nome: ');
         let senhaEleitor = prompt('Digite sua senha: ');
-        let voto = urna.find(v => v.nome === nomeEleitor);
+        //Ao invez da variável se voto, ficou indexVoto,pq vc quer a posição do array
+        let indexVoto = urna.findIndex(v => v.nome === nomeEleitor);
         let segurancaVoto = seguranca.find(v => v.nome === nomeEleitor && v.senha === senhaEleitor);
 
-        if (voto && segurancaVoto) {
+        if (indexVoto !== -1 && segurancaVoto) {
             console.log(`Escolha o novo candidato: 
             1. Candidato 1
             2. Candidato 2
@@ -85,8 +87,9 @@ function editar() {
             let novoCandidato = ["Candidato 1", "Candidato 2", "Candidato 3", "Candidato 4"][novoVotoOpcao - 1];
 
             if (novoCandidato) {
-                voto.candidato = novoCandidato;
-                console.log('Candidato atualizado com sucesso!', voto);
+                //aqui vc usa o Index no array urna
+                urna[indexVoto].candidato = novoCandidato;
+                console.log('Candidato atualizado com sucesso!', urna[indexVoto]);
             } else {
                 console.log('Opção de candidato inválida!');
             }
@@ -99,7 +102,6 @@ function editar() {
         console.log('Opção inválida!');
     }
 }
-
 module.exports = {
     adicionar,
     listar,
