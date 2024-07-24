@@ -8,7 +8,7 @@ function adicionar() {
     let senha;
     
     while (true) {
-        senha = prompt('Digite uma senha contendo 8 dígitos: letras maiúsculas, minúsculas e caracteres especiais: ');
+        senha = prompt('Digite uma senha com 8 ou mais dígitos contendo: letras maiúsculas, minúsculas e caracteres especiais: ');
 
         const senhaValida = senha.length >= 8 &&
                             /[A-Z]/.test(senha) &&
@@ -32,7 +32,7 @@ function adicionar() {
     let candidato = ["Candidato 1", "Candidato 2", "Candidato 3", "Candidato 4"][candidatoOpcao - 1];
 
     if (candidato) {
-        seguranca.push({ senha });
+        seguranca.push({ nome, senha });
         urna.push({ nome, candidato });
         console.log('Voto adicionado com sucesso!', urna);
     } else {
@@ -66,16 +66,15 @@ function listar() {
 }
 
 function editar() {
-    listar();
     let resposta = prompt('Deseja editar seu voto? (sim/nao) ');
 
     if (resposta === 'sim') {
         let nomeEleitor = prompt('Digite seu nome: ');
         let senhaEleitor = prompt('Digite sua senha: ');
         let voto = urna.find(v => v.nome === nomeEleitor);
-            voto = seguranca.find(v => v.senha === senhaEleitor);
+        let segurancaVoto = seguranca.find(v => v.nome === nomeEleitor && v.senha === senhaEleitor);
 
-        if (voto) {
+        if (voto && segurancaVoto) {
             console.log(`Escolha o novo candidato: 
             1. Candidato 1
             2. Candidato 2
@@ -92,7 +91,7 @@ function editar() {
                 console.log('Opção de candidato inválida!');
             }
         } else {
-            console.log('Nome não encontrado!');
+            console.log('Nome ou senha não encontrados!');
         }
     } else if (resposta === 'nao') {
         console.log('Voltando ao menu!');
